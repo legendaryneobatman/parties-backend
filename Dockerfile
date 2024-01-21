@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apk --no-cache add sqlite
 
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 COPY . .
 RUN npm run build
