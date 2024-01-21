@@ -16,13 +16,13 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   const POPT = '9876';
 
   await app.listen(9876, async () => {
     console.log(`Application running at http://localhost:${POPT}`);
-    console.log(`Application docs at http://localhost:${POPT}/api`);
+    console.log(`Application docs at http://localhost:${POPT}/docs`);
   });
 }
 bootstrap();
