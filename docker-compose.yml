@@ -2,6 +2,17 @@ version: '3.4'
 services:
   parties-backend:
     container_name: parties-backend
-    build: .
+    build:
+      context: .
+      dockerfile: src/Dockerfile
     ports:
       - "9876:9876"
+  parties-backend-nginx:
+    container_name: parties-backend-nginx
+    build:
+      context: .
+      dockerfile: .nginx/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - parties-backend

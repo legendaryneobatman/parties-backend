@@ -1,22 +1,7 @@
-FROM node:16-alpine
-
-WORKDIR /app
-
-RUN apk --no-cache add sqlite
-
-COPY package*.json ./
-RUN npm install
-ARG CACHEBUST=1
-
-COPY . .
-RUN npm run build
-
-CMD ["npm", "run", "start:prod"]
-
 FROM nginx:1.19
 
 RUN rm -f /etc/nginx/conf.d/default.conf
-COPY .nginx/nginx.conf /etc/nginx/conf.d
+COPY ../.nginx/nginx.conf /etc/nginx/conf.d
 
 RUN chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
