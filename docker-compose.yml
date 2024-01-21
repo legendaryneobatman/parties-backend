@@ -6,13 +6,4 @@ services:
       context: .
       dockerfile: src/Dockerfile
     ports:
-      - ":9876"
-  parties-backend-nginx:
-    container_name: parties-backend-nginx
-    build:
-      context: .
-      dockerfile: .nginx/Dockerfile
-    ports:
-      - "9876:3000"
-    depends_on:
-      - parties-backend
+      - "9876:9876"
