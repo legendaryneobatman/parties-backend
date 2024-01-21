@@ -19,5 +19,5 @@ jobs:
           script: |
             cd legendaryneobatman-parties-server
             docker compose down
-            git pull origin master
+            git pull origin main
             docker compose up --build -d
