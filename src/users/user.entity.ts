@@ -1,11 +1,5 @@
 import { Exclude } from '@nestjs/class-transformer';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Party } from '../parties/party.entity';
 
 @Entity()
@@ -23,7 +17,19 @@ export class User {
   @Exclude()
   password: string;
 
-  @ManyToMany(() => Party)
-  @JoinTable()
-  assignedParties: Party[];
+  @Column({ nullable: true })
+  firstName: string;
+  @Column({ nullable: true })
+  lastName: string;
+  @Column({ nullable: true })
+  avatar?: string;
+  @Column({ nullable: true })
+  birthdate?: Date;
+  @Column({ nullable: true })
+  address?: string;
+  @Column({ nullable: true })
+  description?: string;
+
+  @OneToMany(() => Party, (party) => party.user)
+  parties: Party[];
 }
