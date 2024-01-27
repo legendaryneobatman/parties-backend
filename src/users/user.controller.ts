@@ -5,11 +5,13 @@ import {
   UseGuards,
   Request,
   UseInterceptors,
-} from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+  Post,
+  Req, Put
+} from "@nestjs/common";
+import { CreateUserDto, UpdateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard, RequestGuarded } from '../auth/jwt-auth.guard';
 import { TransformInterceptor } from '../interceptors/transformInterceptor';
 import { User } from './user.entity';
 
@@ -20,7 +22,6 @@ import { User } from './user.entity';
 export class UserController {
   constructor(private usersService: UserService) {}
 
-  // @Post('/create')
   create(@Body() userDto: CreateUserDto) {
     return this.usersService.createUser(userDto);
   }
@@ -32,10 +33,17 @@ export class UserController {
     return this.usersService.getAll();
   }
 
-  @Get('/findMe')
+  @Get('/me')
   @ApiOperation({ summary: 'Get active user' })
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
   findMe(@Request() req): Promise<User> {
     return this.usersService.findOne({ id: req.user.id });
+  }
+
+  @Put('/')
+  @ApiOperation({ summary: 'Edit user' })
+  @ApiResponse({ status: 200, description: 'User edited successfully' })
+  editUser(@Req() req: RequestGuarded, @Body() dto: UpdateUserDto) {
+    return this.usersService.editUser(req, dto);
   }
 }

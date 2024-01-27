@@ -25,7 +25,6 @@ export class PartyService {
   async getOneById(req, id: number): Promise<Party> {
     return await this.partyRepository.findOne({
       where: { id, userId: req.user.id },
-      relations: { files: true },
     });
   }
 
@@ -50,6 +49,7 @@ export class PartyService {
       img: party.img,
       address: party.address,
       files: party.files,
+      userId: req.user.id,
     });
   }
 

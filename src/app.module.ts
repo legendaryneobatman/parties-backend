@@ -4,7 +4,7 @@ import { PartyModule } from './parties/party.module';
 import { Party } from './parties/party.entity';
 import { FilesModule } from './files/files.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { Files } from './files/files.entity';
+import { File } from './files/files.entity';
 import { UserService } from './users/user.service';
 import { UserController } from './users/user.controller';
 import { UserModule } from './users/user.module';
@@ -23,7 +23,7 @@ import { join } from 'path';
       type: 'sqlite',
       database: join(__dirname, '../data', 'nest-shop.sqlite'),
       synchronize: true,
-      entities: [Party, Files, User],
+      entities: [Party, File, User],
     }),
     PartyModule,
     FilesModule,

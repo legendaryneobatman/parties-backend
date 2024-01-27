@@ -1,4 +1,4 @@
-import { Files } from '../../files/files.entity';
+import { File } from '../../files/files.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePartyDto {
@@ -36,5 +36,5 @@ export class CreatePartyDto {
     example: 'img.jpg',
     description: 'Файлы тусовки тусовки',
   })
-  readonly files?: Files[];
+  readonly files?: File[];
 }

@@ -17,6 +17,19 @@ export class User {
   @Exclude()
   password: string;
 
+  @Column({ nullable: true })
+  firstName: string;
+  @Column({ nullable: true })
+  lastName: string;
+  @Column({ nullable: true })
+  avatar?: string;
+  @Column({ nullable: true })
+  birthdate?: Date;
+  @Column({ nullable: true })
+  address?: string;
+  @Column({ nullable: true })
+  description?: string;
+
   @OneToMany(() => Party, (party) => party.user)
   parties: Party[];
 }
