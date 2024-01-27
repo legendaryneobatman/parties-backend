@@ -6,11 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { PartyService } from './party.service';
 import { CreatePartyDto } from './dto/create-party.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard, RequestGuarded } from '../auth/jwt-auth.guard';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/parties')
@@ -19,33 +20,37 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class PartyController {
   constructor(private partyService: PartyService) {}
   @Get('/')
-  getAll() {
-    return this.partyService.getAllParties();
+  getAll(@Req() req: RequestGuarded) {
+    return this.partyService.getAllParties(req);
   }
 
   @Get('/:id')
-  getOne(@Param('id') id: string) {
-    return this.partyService.getOneById(Number(id));
+  getOne(@Req() req: RequestGuarded, @Param('id') id: string) {
+    return this.partyService.getOneById(req, Number(id));
   }
 
   @Post('/create')
   @ApiOperation({ summary: 'Create a new party' })
   @ApiBody({ type: CreatePartyDto })
   @ApiResponse({ status: 201, description: 'Party created successfully' })
-  create(@Body() partyDto: CreatePartyDto) {
-    return this.partyService.createParty(partyDto);
+  create(@Req() req: RequestGuarded, @Body() partyDto: CreatePartyDto) {
+    return this.partyService.createParty(req, partyDto);
   }
 
   @Put('/:id')
   @ApiOperation({ summary: 'Update a party' })
   @ApiBody({ type: CreatePartyDto })
-  update(@Param('id') id: string, @Body() partyDto: CreatePartyDto) {
-    return this.partyService.update(Number(id), partyDto);
+  update(
+    @Req() req: RequestGuarded,
+    @Param('id') id: string,
+    @Body() partyDto: CreatePartyDto,
+  ) {
+    return this.partyService.update(req, Number(id), partyDto);
   }
 
   @Delete('/:id')
   @ApiOperation({ summary: 'Delete a party' })
-  delete(@Param('id') id: number) {
-    return this.partyService.delete(id);
+  delete(@Req() req: RequestGuarded, @Param('id') id: number) {
+    return this.partyService.delete(req, id);
   }
 }

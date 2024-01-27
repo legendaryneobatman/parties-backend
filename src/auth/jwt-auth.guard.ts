@@ -6,6 +6,11 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { User } from '../users/user.entity';
+
+export interface RequestGuarded extends Request {
+  user: User;
+}
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

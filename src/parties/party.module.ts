@@ -6,10 +6,11 @@ import { Party } from './party.entity';
 import { Files } from '../files/files.entity';
 import { AuthModule } from '../auth/auth.module';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../users/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Party, Files]),
+    TypeOrmModule.forFeature([Party, Files, User]),
     forwardRef(() => AuthModule),
   ],
   controllers: [PartyController],

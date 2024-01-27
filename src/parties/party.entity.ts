@@ -1,10 +1,20 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Files } from '../files/files.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Party {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  userId: number;
 
   @Column()
   title: string;
@@ -25,4 +35,7 @@ export class Party {
 
   @OneToMany(() => Files, (files) => files.party)
   files: Files[];
+
+  @ManyToOne(() => User, (user) => user.parties)
+  user?: User[];
 }
